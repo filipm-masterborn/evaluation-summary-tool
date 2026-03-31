@@ -22,15 +22,11 @@ interface EvaluationStore extends EvaluationData {
   setRatingScore: (score: number) => void;
   setRatingComment: (comment: string) => void;
   setRatingRespondents: (count: number) => void;
-  setPromotionDecision: (decision: string) => void;
-  setPromotionBullets: (bullets: string[]) => void;
-  setDelta: (delta: string[]) => void;
+  setPromotionContent: (content: string) => void;
+  setDelta: (delta: string) => void;
   setStrengths: (strengths: StrengthItem[]) => void;
   setImprovements: (improvements: ImprovementItem[]) => void;
-  setOverallText: (text: string) => void;
-  setQuoteText: (text: string) => void;
-  setQuoteAuthor: (author: string) => void;
-  setClosing: (text: string) => void;
+  setOverallContent: (content: string) => void;
   toggleSection: (section: keyof EvaluationData["sections"]) => void;
   setLayout: (layout: LayoutType) => void;
   setMbSince: (value: string) => void;
@@ -56,23 +52,13 @@ export const useEvaluationStore = create<EvaluationStore>((set) => ({
     set((s) => ({ rating: { ...s.rating, comment } })),
   setRatingRespondents: (respondents) =>
     set((s) => ({ rating: { ...s.rating, respondents } })),
-  setPromotionDecision: (decision) =>
-    set((s) => ({ promotion: { ...s.promotion, decision } })),
-  setPromotionBullets: (bullets) =>
-    set((s) => ({ promotion: { ...s.promotion, bullets } })),
+  setPromotionContent: (content) =>
+    set({ promotion: { content } }),
   setDelta: (delta) => set({ delta }),
   setStrengths: (strengths) => set({ strengths }),
   setImprovements: (improvements) => set({ improvements }),
-  setOverallText: (text) =>
-    set((s) => ({ overall: { ...s.overall, text } })),
-  setQuoteText: (text) =>
-    set((s) => ({ overall: { ...s.overall, quote: { ...s.overall.quote, text } } })),
-  setQuoteAuthor: (author) =>
-    set((s) => ({
-      overall: { ...s.overall, quote: { ...s.overall.quote, author } },
-    })),
-  setClosing: (text) =>
-    set((s) => ({ overall: { ...s.overall, closing: text } })),
+  setOverallContent: (content) =>
+    set({ overall: { content } }),
   toggleSection: (section) =>
     set((s) => ({
       sections: { ...s.sections, [section]: !s.sections[section] },

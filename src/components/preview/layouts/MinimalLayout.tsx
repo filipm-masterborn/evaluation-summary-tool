@@ -76,27 +76,42 @@ export default function MinimalLayout({ data }: { data: EvaluationData }) {
               <div className="w-full bg-neutral-100 h-[4px] rounded-full overflow-hidden">
                 <div className="bg-emerald-500 h-full rounded-full transition-all" style={{ width: `${ratingPercent * 100}%` }} />
               </div>
-              <p className="font-[family-name:var(--font-inter)] text-[10px] text-neutral-500 mt-[4px] leading-[1.4]">
-                {data.rating.respondents} respondentów — {data.rating.comment}
-              </p>
+              <div className="flex items-baseline gap-[4px] mt-[4px]">
+                <span className="font-[family-name:var(--font-inter)] text-[10px] text-neutral-500 shrink-0">
+                  {data.rating.respondents} respondentów —
+                </span>
+                <div
+                  className="rich-preview font-[family-name:var(--font-inter)] text-[10px] text-neutral-500 leading-[1.4] [&_p]:inline"
+                  dangerouslySetInnerHTML={{ __html: data.rating.comment }}
+                />
+              </div>
             </div>
           </div>
         )}
 
+        {/* === PROMOTION === */}
+        {data.sections.promotion && (
+          <div>
+            <p className="font-[family-name:var(--font-jetbrains)] font-bold text-[10px] text-neutral-400 tracking-[0.5px] uppercase mb-[8px]">
+              Awans?
+            </p>
+            <div
+              className="rich-preview font-[family-name:var(--font-inter)] text-[11px] text-neutral-600 leading-[1.5]"
+              dangerouslySetInnerHTML={{ __html: data.promotion.content }}
+            />
+          </div>
+        )}
+
         {/* === DELTA as simple list === */}
-        {data.sections.delta && data.delta.length > 0 && (
+        {data.sections.delta && data.delta && (
           <div>
             <p className="font-[family-name:var(--font-jetbrains)] font-bold text-[10px] text-neutral-400 tracking-[0.5px] uppercase mb-[8px]">
               Delta
             </p>
-            <ul className="space-y-[4px]">
-              {data.delta.map((item, i) => (
-                <li key={i} className="font-[family-name:var(--font-inter)] text-[11px] text-neutral-600 leading-[1.5] flex gap-[8px]">
-                  <span className="text-emerald-500 mt-[4px] shrink-0">•</span>
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
+            <div
+              className="rich-preview font-[family-name:var(--font-inter)] text-[11px] text-neutral-600 leading-[1.5]"
+              dangerouslySetInnerHTML={{ __html: data.delta }}
+            />
           </div>
         )}
 
@@ -148,16 +163,10 @@ export default function MinimalLayout({ data }: { data: EvaluationData }) {
             <p className="font-[family-name:var(--font-jetbrains)] font-bold text-[10px] text-neutral-400 tracking-[0.5px] uppercase mb-[8px]">
               Overall
             </p>
-            <p className="font-[family-name:var(--font-inter)] text-[11px] text-neutral-600 leading-[1.6]">{data.overall.text}</p>
-            {data.overall.quote.text && (
-              <div className="flex items-center gap-[8px] mt-[10px] pl-[12px] border-l-2 border-emerald-500">
-                <p className="font-[family-name:var(--font-inter)] italic text-[11px] text-neutral-700">{data.overall.quote.text}</p>
-                <span className="font-[family-name:var(--font-inter)] text-[10px] text-neutral-400 whitespace-nowrap">— {data.overall.quote.author}</span>
-              </div>
-            )}
-            {data.overall.closing && (
-              <p className="font-[family-name:var(--font-inter)] text-[11px] text-neutral-600 leading-[1.6] mt-[10px]">{data.overall.closing}</p>
-            )}
+            <div
+              className="rich-preview font-[family-name:var(--font-inter)] text-[11px] text-neutral-600 leading-[1.6]"
+              dangerouslySetInnerHTML={{ __html: data.overall.content }}
+            />
           </div>
         )}
       </div>

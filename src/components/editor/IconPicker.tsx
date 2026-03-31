@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
+import { createPortal } from "react-dom";
 import { DynamicIcon } from "@/lib/DynamicIcon";
 import { searchIcons } from "@/lib/iconList";
 
@@ -13,6 +14,7 @@ interface IconPickerProps {
 export function IconPicker({ value, onChange, label }: IconPickerProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
+  const [dropdownPos, setDropdownPos] = useState<{ top: number; left: number }>({ top: 0, left: 0 });
   const dropdownRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
@@ -27,6 +29,34 @@ export function IconPicker({ value, onChange, label }: IconPickerProps) {
     },
     [onChange],
   );
+
+  const DROPDOWN_HEIGHT = 340; // approx height of search + icon grid
+
+  // Calculate dropdown position when opening
+  const calcPosition = useCallback(() => {
+    if (!triggerRef.current) return { top: 0, left: 0 };
+    const rect = triggerRef.current.getBoundingClientRect();
+    const spaceBelow = window.innerHeight - rect.bottom;
+    const fitsBelow = spaceBelow >= DROPDOWN_HEIGHT + 8;
+    return {
+      top: fitsBelow ? rect.bottom + 8 : rect.top - DROPDOWN_HEIGHT - 8,
+      left: rect.left,
+    };
+  }, []);
+
+  const openDropdown = useCallback(() => {
+    setDropdownPos(calcPosition());
+    setIsOpen(true);
+  }, [calcPosition]);
+
+  const toggleDropdown = useCallback(() => {
+    if (isOpen) {
+      setIsOpen(false);
+      setQuery("");
+    } else {
+      openDropdown();
+    }
+  }, [isOpen, openDropdown]);
 
   // Close on outside click
   useEffect(() => {
@@ -48,6 +78,22 @@ export function IconPicker({ value, onChange, label }: IconPickerProps) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isOpen]);
 
+  // Reposition on scroll/resize while open
+  useEffect(() => {
+    if (!isOpen) return;
+
+    function reposition() {
+      setDropdownPos(calcPosition());
+    }
+
+    window.addEventListener("scroll", reposition, true);
+    window.addEventListener("resize", reposition);
+    return () => {
+      window.removeEventListener("scroll", reposition, true);
+      window.removeEventListener("resize", reposition);
+    };
+  }, [isOpen]);
+
   // Focus search input when dropdown opens
   useEffect(() => {
     if (isOpen && searchInputRef.current) {
@@ -55,30 +101,12 @@ export function IconPicker({ value, onChange, label }: IconPickerProps) {
     }
   }, [isOpen]);
 
-  return (
-    <div className="relative inline-block">
-      {label && (
-        <label className="mb-1 block font-space-grotesk text-xs font-medium text-neutral-600">
-          {label}
-        </label>
-      )}
-
-      {/* Trigger button */}
-      <button
-        ref={triggerRef}
-        type="button"
-        onClick={() => setIsOpen((prev) => !prev)}
-        className="flex h-10 w-10 items-center justify-center rounded-lg border border-neutral-200 bg-white transition-colors hover:border-neutral-300 hover:bg-neutral-50"
-        aria-label={`Selected icon: ${value}. Click to change.`}
-      >
-        <DynamicIcon name={value} size={24} className="text-neutral-700" />
-      </button>
-
-      {/* Dropdown */}
-      {isOpen && (
+  const dropdown = isOpen
+    ? createPortal(
         <div
           ref={dropdownRef}
-          className="absolute top-full left-0 z-50 mt-2 w-72 rounded-lg border border-neutral-200 bg-white shadow-lg"
+          style={{ position: "fixed", top: dropdownPos.top, left: dropdownPos.left }}
+          className="z-[9999] w-72 rounded-lg border border-neutral-200 bg-white shadow-lg"
         >
           {/* Search input */}
           <div className="border-b border-neutral-100 p-2">
@@ -122,8 +150,31 @@ export function IconPicker({ value, onChange, label }: IconPickerProps) {
               </div>
             )}
           </div>
-        </div>
+        </div>,
+        document.body,
+      )
+    : null;
+
+  return (
+    <div className="relative inline-block">
+      {label && (
+        <label className="mb-1 block font-space-grotesk text-xs font-medium text-neutral-600">
+          {label}
+        </label>
       )}
+
+      {/* Trigger button */}
+      <button
+        ref={triggerRef}
+        type="button"
+        onClick={toggleDropdown}
+        className="flex h-10 w-10 items-center justify-center rounded-lg border border-neutral-200 bg-white transition-colors hover:border-neutral-300 hover:bg-neutral-50"
+        aria-label={`Selected icon: ${value}. Click to change.`}
+      >
+        <DynamicIcon name={value} size={24} className="text-neutral-700" />
+      </button>
+
+      {dropdown}
     </div>
   );
 }

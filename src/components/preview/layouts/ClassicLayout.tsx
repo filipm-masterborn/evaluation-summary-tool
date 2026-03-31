@@ -149,9 +149,10 @@ export default function ClassicLayout({ data }: { data: EvaluationData }) {
                     );
                   })}
                 </div>
-                <p className="font-[family-name:var(--font-inter)] font-medium text-[10px] text-neutral-600 leading-[1.4] w-full">
-                  {data.rating.comment}
-                </p>
+                <div
+                  className="rich-preview font-[family-name:var(--font-inter)] font-medium text-[10px] text-neutral-600 leading-[1.4] w-full"
+                  dangerouslySetInnerHTML={{ __html: data.rating.comment }}
+                />
               </div>
             )}
 
@@ -161,36 +162,29 @@ export default function ClassicLayout({ data }: { data: EvaluationData }) {
                 <div className="flex items-start justify-between w-full">
                   <div className="flex flex-col font-[family-name:var(--font-jetbrains)] font-bold text-[10px] whitespace-nowrap">
                     <p className="text-neutral-500 tracking-[0.4px] leading-normal">AWANS?</p>
-                    <p className="text-neutral-800 uppercase leading-normal">
-                      {data.promotion.decision}
-                    </p>
                   </div>
                 </div>
-                <ul className="list-disc font-[family-name:var(--font-inter)] font-medium text-[10px] text-neutral-600 w-full">
-                  {data.promotion.bullets.map((bullet, i) => (
-                    <li key={i} className="ml-[15px] leading-[1.4]">
-                      {bullet}
-                    </li>
-                  ))}
-                </ul>
+                <div
+                  className="rich-preview font-[family-name:var(--font-inter)] font-medium text-[10px] text-neutral-600 w-full leading-[1.4]"
+                  dangerouslySetInnerHTML={{ __html: data.promotion.content }}
+                />
               </div>
             )}
           </div>
         )}
 
         {/* === DELTA === */}
-        {data.sections.delta && data.delta.length > 0 && (
+        {data.sections.delta && data.delta && (
           <div className="bg-neutral-50 border border-neutral-200 flex flex-col gap-[10px] p-[16px] rounded-[12px] w-full">
             <div className="flex items-start justify-between w-full">
               <p className="font-[family-name:var(--font-jetbrains)] font-bold text-[10px] text-neutral-500 tracking-[0.4px] whitespace-nowrap leading-normal">
                 DELTA
               </p>
             </div>
-            {data.delta.map((item, i) => (
-              <ul key={i} className="list-disc font-[family-name:var(--font-inter)] font-medium text-[10px] text-neutral-600">
-                <li className="ml-[15px] leading-[1.4]">{item}</li>
-              </ul>
-            ))}
+            <div
+              className="rich-preview font-[family-name:var(--font-inter)] font-medium text-[10px] text-neutral-600 w-full leading-[1.4]"
+              dangerouslySetInnerHTML={{ __html: data.delta }}
+            />
           </div>
         )}
 
@@ -263,30 +257,10 @@ export default function ClassicLayout({ data }: { data: EvaluationData }) {
             <p className="font-[family-name:var(--font-jetbrains)] font-bold text-[10px] text-neutral-500 tracking-[0.4px] whitespace-nowrap leading-normal">
               OVERALL
             </p>
-            <p className="font-[family-name:var(--font-inter)] font-medium text-[10px] text-neutral-600 leading-[1.6] w-full">
-              {data.overall.text}
-            </p>
-            {/* Quote */}
-            {data.overall.quote.text && (
-              <div className="flex gap-[6px] items-center w-full">
-                <div className="flex items-center self-stretch">
-                  <div className="bg-emerald-600 w-[2px] h-full" />
-                </div>
-                <div className="flex flex-1 gap-[4px] items-center text-[10px] font-medium leading-[1.6]">
-                  <p className="font-[family-name:var(--font-inter)] italic text-neutral-800 whitespace-nowrap">
-                    {data.overall.quote.text}
-                  </p>
-                  <p className="font-[family-name:var(--font-inter)] text-neutral-600 flex-1">
-                    {data.overall.quote.author}
-                  </p>
-                </div>
-              </div>
-            )}
-            {data.overall.closing && (
-              <p className="font-[family-name:var(--font-inter)] font-medium text-[10px] text-neutral-600 leading-[1.6] w-full">
-                {data.overall.closing}
-              </p>
-            )}
+            <div
+              className="rich-preview font-[family-name:var(--font-inter)] font-medium text-[10px] text-neutral-600 leading-[1.6] w-full"
+              dangerouslySetInnerHTML={{ __html: data.overall.content }}
+            />
           </div>
         )}
       </div>

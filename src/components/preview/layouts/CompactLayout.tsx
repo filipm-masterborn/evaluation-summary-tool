@@ -76,28 +76,28 @@ export default function CompactLayout({ data }: { data: EvaluationData }) {
               <div className="w-full bg-emerald-100 h-[5px] rounded-full overflow-hidden">
                 <div className="bg-emerald-500 h-full rounded-full" style={{ width: `${ratingPercent * 100}%` }} />
               </div>
-              <p className="font-[family-name:var(--font-inter)] font-medium text-[9px] text-neutral-600 leading-[1.4]">{data.rating.comment}</p>
+              <div
+                className="rich-preview font-[family-name:var(--font-inter)] font-medium text-[9px] text-neutral-600 leading-[1.4]"
+                dangerouslySetInnerHTML={{ __html: data.rating.comment }}
+              />
             </div>
           )}
           {data.sections.promotion && (
             <div className="bg-neutral-50 border border-neutral-200 flex flex-col gap-[8px] p-[14px] rounded-[12px] w-[200px] shrink-0">
               <p className="font-[family-name:var(--font-jetbrains)] font-bold text-[9px] text-neutral-500 tracking-[0.4px]">AWANS?</p>
-              <p className="font-[family-name:var(--font-jetbrains)] font-bold text-[9px] text-neutral-800 uppercase">{data.promotion.decision}</p>
-              <ul className="list-disc font-[family-name:var(--font-inter)] font-medium text-[9px] text-neutral-600">
-                {data.promotion.bullets.map((b, i) => (
-                  <li key={i} className="ml-[12px] leading-[1.4]">{b}</li>
-                ))}
-              </ul>
+              <div
+                className="rich-preview font-[family-name:var(--font-inter)] font-medium text-[9px] text-neutral-600 leading-[1.4]"
+                dangerouslySetInnerHTML={{ __html: data.promotion.content }}
+              />
             </div>
           )}
-          {data.sections.delta && data.delta.length > 0 && (
+          {data.sections.delta && data.delta && (
             <div className="bg-neutral-50 border border-neutral-200 flex flex-col gap-[6px] p-[14px] rounded-[12px] flex-1">
               <p className="font-[family-name:var(--font-jetbrains)] font-bold text-[9px] text-neutral-500 tracking-[0.4px]">DELTA</p>
-              <ul className="list-disc font-[family-name:var(--font-inter)] font-medium text-[9px] text-neutral-600">
-                {data.delta.map((d, i) => (
-                  <li key={i} className="ml-[12px] leading-[1.4] mb-[2px]">{d}</li>
-                ))}
-              </ul>
+              <div
+                className="rich-preview font-[family-name:var(--font-inter)] font-medium text-[9px] text-neutral-600 leading-[1.4]"
+                dangerouslySetInnerHTML={{ __html: data.delta }}
+              />
             </div>
           )}
         </div>
@@ -140,17 +140,10 @@ export default function CompactLayout({ data }: { data: EvaluationData }) {
         {data.sections.overall && (
           <div className="bg-neutral-50 border border-neutral-200 flex flex-col gap-[8px] p-[14px] rounded-[12px]">
             <p className="font-[family-name:var(--font-jetbrains)] font-bold text-[9px] text-neutral-500 tracking-[0.4px]">OVERALL</p>
-            <p className="font-[family-name:var(--font-inter)] font-medium text-[9px] text-neutral-600 leading-[1.5]">{data.overall.text}</p>
-            {data.overall.quote.text && (
-              <div className="flex gap-[6px] items-center">
-                <div className="bg-emerald-600 w-[2px] self-stretch" />
-                <p className="font-[family-name:var(--font-inter)] font-medium italic text-[9px] text-neutral-800">{data.overall.quote.text}</p>
-                <p className="font-[family-name:var(--font-inter)] font-medium text-[9px] text-neutral-600">{data.overall.quote.author}</p>
-              </div>
-            )}
-            {data.overall.closing && (
-              <p className="font-[family-name:var(--font-inter)] font-medium text-[9px] text-neutral-600 leading-[1.5]">{data.overall.closing}</p>
-            )}
+            <div
+              className="rich-preview font-[family-name:var(--font-inter)] font-medium text-[9px] text-neutral-600 leading-[1.5]"
+              dangerouslySetInnerHTML={{ __html: data.overall.content }}
+            />
           </div>
         )}
       </div>

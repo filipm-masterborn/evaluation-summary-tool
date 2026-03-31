@@ -3,6 +3,7 @@
 import { useEvaluationStore } from "@/store/useEvaluationStore";
 import { BadgeColor, LayoutType, StrengthItem, ImprovementItem } from "@/types/evaluation";
 import { IconPicker } from "./IconPicker";
+import { RichTextEditor } from "./RichTextEditor";
 import {
   Eye,
   EyeOff,
@@ -12,6 +13,7 @@ import {
   LayoutTemplate,
   Columns3,
   Minus,
+  ChevronRight,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -101,7 +103,7 @@ function TextArea({
       onChange={(e) => onChange(e.target.value)}
       rows={rows}
       placeholder={placeholder}
-      className="w-full px-3 py-2 text-[12px] font-[family-name:var(--font-inter)] border border-neutral-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-cyan-300 focus:border-transparent transition resize-none"
+      className="w-full px-3 py-2 text-[12px] font-[family-name:var(--font-inter)] border border-neutral-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-cyan-300 focus:border-transparent transition resize-y overflow-y-auto min-h-[2.5rem] max-h-[12rem]"
     />
   );
 }
@@ -109,31 +111,45 @@ function TextArea({
 function SectionCard({
   title,
   children,
-  defaultOpen = true,
+  open,
+  onToggle,
 }: {
   title: string;
   children: React.ReactNode;
-  defaultOpen?: boolean;
+  open: boolean;
+  onToggle: () => void;
 }) {
-  const [open, setOpen] = useState(defaultOpen);
   return (
-    <div className="border border-neutral-200 rounded-xl bg-white overflow-hidden">
+    <div className="border border-neutral-200 rounded-xl bg-white overflow-hidden shrink-0">
       <button
-        onClick={() => setOpen(!open)}
+        onClick={onToggle}
         className="w-full flex items-center justify-between px-4 py-3 hover:bg-neutral-50 transition"
       >
         <span className="font-[family-name:var(--font-jetbrains)] font-bold text-[11px] text-neutral-700 tracking-[0.3px] uppercase">
           {title}
         </span>
-        <span className="text-neutral-400 text-[12px]">{open ? "−" : "+"}</span>
+        <span className={`text-neutral-400 transition-transform duration-200 ${open ? "rotate-90" : ""}`}>
+          <ChevronRight size={14} />
+        </span>
       </button>
-      {open && <div className="px-4 pb-4 flex flex-col gap-3">{children}</div>}
+      {open && (
+        <div className="px-4 pb-4 flex flex-col gap-3 overflow-y-auto max-h-[60vh]">
+          {children}
+        </div>
+      )}
     </div>
   );
 }
 
+type SectionId = "profil" | "rating" | "awans" | "delta" | "strengths" | "improvements" | "overall";
+
 export default function EvaluationForm() {
   const store = useEvaluationStore();
+  const [openSection, setOpenSection] = useState<SectionId | null>("profil");
+
+  const toggleSection = (id: SectionId) => {
+    setOpenSection((prev) => (prev === id ? null : id));
+  };
 
   const addStrength = () => {
     const newItem: StrengthItem = {
@@ -175,34 +191,6 @@ export default function EvaluationForm() {
     store.setImprovements(store.improvements.filter((s) => s.id !== id));
   };
 
-  const addDelta = () => {
-    store.setDelta([...store.delta, "Nowy punkt..."]);
-  };
-
-  const updateDelta = (index: number, value: string) => {
-    const newDelta = [...store.delta];
-    newDelta[index] = value;
-    store.setDelta(newDelta);
-  };
-
-  const removeDelta = (index: number) => {
-    store.setDelta(store.delta.filter((_, i) => i !== index));
-  };
-
-  const addPromotionBullet = () => {
-    store.setPromotionBullets([...store.promotion.bullets, "Nowy punkt..."]);
-  };
-
-  const updatePromotionBullet = (index: number, value: string) => {
-    const bullets = [...store.promotion.bullets];
-    bullets[index] = value;
-    store.setPromotionBullets(bullets);
-  };
-
-  const removePromotionBullet = (index: number) => {
-    store.setPromotionBullets(store.promotion.bullets.filter((_, i) => i !== index));
-  };
-
   return (
     <div className="flex flex-col gap-4 p-4 h-full overflow-y-auto">
       {/* Layout selector */}
@@ -242,7 +230,7 @@ export default function EvaluationForm() {
       </div>
 
       {/* Header section */}
-      <SectionCard title="Profil">
+      <SectionCard title="Profil" open={openSection === "profil"} onToggle={() => toggleSection("profil")}>
         <div>
           <Label>Zdjęcie (URL)</Label>
           <Input
@@ -301,7 +289,7 @@ export default function EvaluationForm() {
       </SectionCard>
 
       {/* Rating */}
-      <SectionCard title="Rating" defaultOpen={false}>
+      <SectionCard title="Rating" open={openSection === "rating"} onToggle={() => toggleSection("rating")}>
         <div className="grid grid-cols-3 gap-3">
           <div>
             <Label>Score</Label>
@@ -344,67 +332,42 @@ export default function EvaluationForm() {
         </div>
         <div>
           <Label>Komentarz</Label>
-          <TextArea value={store.rating.comment} onChange={store.setRatingComment} />
+          <RichTextEditor
+            content={store.rating.comment}
+            onChange={store.setRatingComment}
+            placeholder="Komentarz do ratingu..."
+          />
         </div>
       </SectionCard>
 
       {/* Promotion */}
-      <SectionCard title="Awans" defaultOpen={false}>
+      <SectionCard title="Awans" open={openSection === "awans"} onToggle={() => toggleSection("awans")}>
         <div>
-          <Label>Decyzja</Label>
-          <Input value={store.promotion.decision} onChange={store.setPromotionDecision} />
-        </div>
-        <div>
-          <Label>Punkty</Label>
-          {store.promotion.bullets.map((bullet, i) => (
-            <div key={i} className="flex gap-2 mb-2">
-              <TextArea
-                value={bullet}
-                onChange={(v) => updatePromotionBullet(i, v)}
-                rows={1}
-              />
-              <button
-                onClick={() => removePromotionBullet(i)}
-                className="text-neutral-300 hover:text-red-500 transition shrink-0"
-              >
-                <Trash2 size={14} />
-              </button>
-            </div>
-          ))}
-          <button
-            onClick={addPromotionBullet}
-            className="flex items-center gap-1 text-[11px] text-cyan-600 hover:text-cyan-800 font-[family-name:var(--font-jetbrains)] font-bold"
-          >
-            <Plus size={12} /> Dodaj punkt
-          </button>
+          <Label>Decyzja + punkty</Label>
+          <RichTextEditor
+            content={store.promotion.content}
+            onChange={store.setPromotionContent}
+            placeholder="Decyzja awansowa i uzasadnienie..."
+          />
         </div>
       </SectionCard>
 
       {/* Delta */}
-      <SectionCard title="Delta" defaultOpen={false}>
-        {store.delta.map((item, i) => (
-          <div key={i} className="flex gap-2">
-            <TextArea value={item} onChange={(v) => updateDelta(i, v)} rows={1} />
-            <button
-              onClick={() => removeDelta(i)}
-              className="text-neutral-300 hover:text-red-500 transition shrink-0"
-            >
-              <Trash2 size={14} />
-            </button>
-          </div>
-        ))}
-        <button
-          onClick={addDelta}
-          className="flex items-center gap-1 text-[11px] text-cyan-600 hover:text-cyan-800 font-[family-name:var(--font-jetbrains)] font-bold"
-        >
-          <Plus size={12} /> Dodaj punkt
-        </button>
+      <SectionCard title="Delta" open={openSection === "delta"} onToggle={() => toggleSection("delta")}>
+        <div>
+          <Label>Zmiany / wydarzenia</Label>
+          <RichTextEditor
+            content={store.delta}
+            onChange={store.setDelta}
+            placeholder="Kluczowe zmiany w okresie ewaluacji..."
+          />
+        </div>
       </SectionCard>
 
       {/* Strengths */}
-      <SectionCard title="Strengths" defaultOpen={false}>
+      <SectionCard title="Strengths" open={openSection === "strengths"} onToggle={() => toggleSection("strengths")}>
         {store.strengths.map((item) => (
-          <div key={item.id} className="border border-neutral-100 rounded-lg p-3 flex flex-col gap-2 bg-neutral-50">
+          <div key={item.id} className="border border-neutral-100 rounded-lg p-4 flex flex-col gap-3 bg-neutral-50">
             <div className="flex items-center gap-2">
               <IconPicker
                 value={item.icon}
@@ -426,7 +389,7 @@ export default function EvaluationForm() {
             <TextArea
               value={item.description}
               onChange={(v) => updateStrength(item.id, "description", v)}
-              rows={2}
+              rows={3}
               placeholder="Opis..."
             />
           </div>
@@ -440,9 +403,9 @@ export default function EvaluationForm() {
       </SectionCard>
 
       {/* Improvements */}
-      <SectionCard title="Areas for Improvement" defaultOpen={false}>
+      <SectionCard title="Areas for Improvement" open={openSection === "improvements"} onToggle={() => toggleSection("improvements")}>
         {store.improvements.map((item) => (
-          <div key={item.id} className="border border-neutral-100 rounded-lg p-3 flex flex-col gap-2 bg-neutral-50">
+          <div key={item.id} className="border border-neutral-100 rounded-lg p-4 flex flex-col gap-3 bg-neutral-50">
             <div className="flex items-center gap-2">
               <IconPicker
                 value={item.icon}
@@ -464,7 +427,7 @@ export default function EvaluationForm() {
             <TextArea
               value={item.description}
               onChange={(v) => updateImprovement(item.id, "description", v)}
-              rows={2}
+              rows={3}
               placeholder="Opis..."
             />
           </div>
@@ -478,30 +441,14 @@ export default function EvaluationForm() {
       </SectionCard>
 
       {/* Overall */}
-      <SectionCard title="Overall" defaultOpen={false}>
+      <SectionCard title="Overall" open={openSection === "overall"} onToggle={() => toggleSection("overall")}>
         <div>
-          <Label>Tekst główny</Label>
-          <TextArea value={store.overall.text} onChange={store.setOverallText} rows={3} />
-        </div>
-        <div>
-          <Label>Cytat</Label>
-          <Input
-            value={store.overall.quote.text}
-            onChange={store.setQuoteText}
-            placeholder="Treść cytatu..."
+          <Label>Podsumowanie</Label>
+          <RichTextEditor
+            content={store.overall.content}
+            onChange={store.setOverallContent}
+            placeholder="Podsumowanie ewaluacji — tekst, cytaty, zamknięcie..."
           />
-        </div>
-        <div>
-          <Label>Autor cytatu</Label>
-          <Input
-            value={store.overall.quote.author}
-            onChange={store.setQuoteAuthor}
-            placeholder="Imię i Nazwisko"
-          />
-        </div>
-        <div>
-          <Label>Tekst zamykający</Label>
-          <TextArea value={store.overall.closing} onChange={store.setClosing} rows={3} />
         </div>
       </SectionCard>
     </div>

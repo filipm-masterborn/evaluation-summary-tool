@@ -15,23 +15,16 @@ export const defaultData: EvaluationData = {
     maxScore: 4,
     respondents: 9,
     comment:
-      "Spójne z growth modelem - w kilku obszarach operuje powyżej oczekiwań na juniora.",
+      "<p>Spójne z growth modelem - w kilku obszarach operuje powyżej oczekiwań na juniora.</p>",
   },
 
   promotion: {
-    decision: "TAK - potencjał | NIE - za wcześnie",
-    bullets: [
-      "Biznes, klient, teamwork: powyżej juniora.",
-      "Warsztat Figmowy i MVP mindset: jeszcze dojrzewają. Potrzeba więcej projektów żeby wyrównać poziom.",
-    ],
+    content:
+      '<p><strong>TAK - potencjał | NIE - za wcześnie</strong></p><ul><li>Biznes, klient, teamwork: powyżej juniora.</li><li>Warsztat Figmowy i MVP mindset: jeszcze dojrzewają. Potrzeba więcej projektów żeby wyrównać poziom.</li></ul>',
   },
 
-  delta: [
-    "Intern → Junior. Awans 01.02.2026, na podstawie widocznego progresu w Aptus i Conlego.",
-    "Samodzielne przejęcie relacji z trudnym klientem (Jonathan). Odciążył cały zespół bez większego nadzoru.",
-    "Jednoczesna praca w 2 projektach (Aptus + Conlego AI Discovery), efektywne balansowanie priorytetów.",
-    "Aktywnie inicjował feedback. W grudniu sam poprosił cały Aptus o ocenę, widoczna poprawa od tamtego czasu.",
-  ],
+  delta:
+    '<ul><li>Intern → Junior. Awans 01.02.2026, na podstawie widocznego progresu w Aptus i Conlego.</li><li>Samodzielne przejęcie relacji z trudnym klientem (Jonathan). Odciążył cały zespół bez większego nadzoru.</li><li>Jednoczesna praca w 2 projektach (Aptus + Conlego AI Discovery), efektywne balansowanie priorytetów.</li><li>Aktywnie inicjował feedback. W grudniu sam poprosił cały Aptus o ocenę, widoczna poprawa od tamtego czasu.</li></ul>',
 
   strengths: [
     {
@@ -96,13 +89,8 @@ export const defaultData: EvaluationData = {
   ],
 
   overall: {
-    text: "Kacper w 7 miesiącach zrobił progres, którego oczekuje się od kogoś z większym stażem. Dojrzałość, samodzielność i relacje z klientem na poziomie mida. Obszary rozwoju naturalne dla etapu kariery i aktywnie przez niego adresowane.",
-    quote: {
-      text: "Kacper zrobił taki progres w te pół roku, że aż szok.",
-      author: "Damian Fejdasz",
-    },
-    closing:
-      "Na najbliższy okres warto żeby Kacper wybrał 2–3 priorytety rozwojowe i ułożył konkretną roadmapę zamiast gryźć wszystko naraz. Zaawansowana Figma przyjdzie naturalnie z praktyką w projektach, nie ma tu skrótu.",
+    content:
+      '<p>Kacper w 7 miesiącach zrobił progres, którego oczekuje się od kogoś z większym stażem. Dojrzałość, samodzielność i relacje z klientem na poziomie mida. Obszary rozwoju naturalne dla etapu kariery i aktywnie przez niego adresowane.</p><blockquote><p>"Kacper zrobił taki progres w te pół roku, że aż szok." — Damian Fejdasz</p></blockquote><p>Na najbliższy okres warto żeby Kacper wybrał 2–3 priorytety rozwojowe i ułożył konkretną roadmapę zamiast gryźć wszystko naraz. Zaawansowana Figma przyjdzie naturalnie z praktyką w projektach, nie ma tu skrótu.</p>',
   },
 
   sections: {

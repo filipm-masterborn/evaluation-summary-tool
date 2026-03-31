@@ -11,12 +11,11 @@ export interface RatingData {
   score: number;
   maxScore: number;
   respondents: number;
-  comment: string;
+  comment: string; // HTML from WYSIWYG
 }
 
 export interface PromotionData {
-  decision: string;
-  bullets: string[];
+  content: string; // HTML from WYSIWYG (decision + bullets)
 }
 
 export interface StrengthItem {
@@ -33,15 +32,8 @@ export interface ImprovementItem {
   description: string;
 }
 
-export interface QuoteData {
-  text: string;
-  author: string;
-}
-
 export interface OverallData {
-  text: string;
-  quote: QuoteData;
-  closing: string;
+  content: string; // HTML from WYSIWYG (text + quote + closing merged)
 }
 
 export interface SectionVisibility {
@@ -71,8 +63,8 @@ export interface EvaluationData {
   // Promotion
   promotion: PromotionData;
 
-  // Delta
-  delta: string[];
+  // Delta — HTML from WYSIWYG
+  delta: string;
 
   // Strengths
   strengths: StrengthItem[];
