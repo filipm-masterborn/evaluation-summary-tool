@@ -23,7 +23,7 @@ export default function MinimalLayout({ data }: { data: EvaluationData }) {
       <div className="flex flex-col gap-[24px]">
         {/* === HEADER - minimal, clean === */}
         <div
-          className="flex items-center gap-[16px] pb-[20px] border-b border-neutral-200 cursor-pointer rounded-xl hover:bg-blue-50/40 hover:ring-2 hover:ring-blue-300 transition-all"
+          className="flex items-center gap-[16px] pb-[20px] border-b border-neutral-200 cursor-pointer rounded-xl hover:bg-blue-50/40 hover:ring-1 hover:ring-blue-300 transition-all"
           onClick={() => setFocusedSection("profil")}
         >
           <div className="rounded-full w-[64px] h-[64px] overflow-hidden shrink-0 bg-neutral-100">

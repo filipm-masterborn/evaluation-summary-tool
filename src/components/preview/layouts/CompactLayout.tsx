@@ -23,7 +23,7 @@ export default function CompactLayout({ data }: { data: EvaluationData }) {
       <div className="flex flex-col gap-[16px]">
         {/* === HEADER - wider, horizontal === */}
         <div
-          className="flex gap-[20px] items-center cursor-pointer rounded-xl hover:bg-blue-50/40 hover:ring-2 hover:ring-blue-300 transition-all"
+          className="flex gap-[20px] items-center cursor-pointer rounded-xl hover:bg-blue-50/40 hover:ring-1 hover:ring-blue-300 transition-all"
           onClick={() => setFocusedSection("profil")}
         >
           <div className="rounded-[16px] w-[72px] h-[72px] overflow-hidden shrink-0 bg-neutral-200">
