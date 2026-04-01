@@ -2,95 +2,95 @@ import { EvaluationData } from "@/types/evaluation";
 
 export const defaultData: EvaluationData = {
   photo: "",
-  name: "Imię Nazwisko",
-  title: "Stanowisko",
-  badge: { text: "LIGHT TOUCH", color: "cyan" },
+  name: "Jan Kowalski",
+  title: "Mid Product Designer",
+  badge: { text: "STANDARD", color: "emerald" },
 
-  mbSince: "7 msc. - 20.08.2025",
-  promotionDate: "2 msc. - 01.02.2026",
-  evaluationType: "Pierwsza",
+  mbSince: "14 msc. — 01.01.2025",
+  promotionDate: "3 msc. — 01.01.2026",
+  evaluationType: "Półroczna",
 
   rating: {
-    score: 3.4,
+    score: 3.1,
     maxScore: 4,
-    respondents: 9,
+    respondents: 7,
     comment:
-      "<p>Spójne z growth modelem - w kilku obszarach operuje powyżej oczekiwań na juniora.</p>",
+      "<p>Konsekwentnie spełnia oczekiwania na nowym poziomie. W kilku obszarach operuje już powyżej standardu dla mida.</p>",
   },
 
   promotion: {
     content:
-      '<p><strong>TAK - potencjał | NIE - za wcześnie</strong></p><ul><li>Biznes, klient, teamwork: powyżej juniora.</li><li>Warsztat Figmowy i MVP mindset: jeszcze dojrzewają. Potrzeba więcej projektów żeby wyrównać poziom.</li></ul>',
+      '<p><strong>Silne argumenty za TAK</strong></p><ul><li>Samodzielnie prowadzi projekty od discovery do handoff — bez eskalacji do seniora.</li><li>Jakość decyzji designerskich i relacje z klientem konsekwentnie potwierdzone przez cały team.</li></ul>',
   },
 
   delta:
-    '<ul><li>Intern → Junior. Awans 01.02.2026, na podstawie widocznego progresu w Aptus i Conlego.</li><li>Samodzielne przejęcie relacji z trudnym klientem (Jonathan). Odciążył cały zespół bez większego nadzoru.</li><li>Jednoczesna praca w 2 projektach (Aptus + Conlego AI Discovery), efektywne balansowanie priorytetów.</li><li>Aktywnie inicjował feedback. W grudniu sam poprosił cały Aptus o ocenę, widoczna poprawa od tamtego czasu.</li></ul>',
+    '<ul><li>Junior → Mid Designer. Awans 01.01.2026 po 14 miesiącach w firmie, oparty na widocznym progresi w projektach Apollo i Vega.</li><li>Pierwsze samodzielne poprowadzenie discovery z klientem — warsztat + synteza bez udziału seniora.</li><li>Wdrożenie nowego komponentu do design systemu — inicjatywa własna, zaadoptowana przez dwa inne projekty.</li><li>Aktywny udział w onboardingu młodszego designera — mentoring nieoficjalny, ale zauważony przez zespół.</li></ul>',
 
   strengths: [
     {
       id: "s1",
-      icon: "Zap",
-      title: "Adaptacja i proaktywność",
+      icon: "Lightbulb",
+      title: "Myślenie produktowe",
       description:
-        "Szybki onboarding w Aptus (Proposed Models) i Conlego. Hackathon od razu po wejściu do firmy.",
+        "Wychodzi poza ekrany — regularnie zadaje pytania o cel biznesowy i kwestionuje scope zanim zacznie projektować.",
     },
     {
       id: "s2",
-      icon: "Handshake",
-      title: "Komunikacja z klientem",
+      icon: "FileText",
+      title: "Jakość dokumentacji",
       description:
-        'Zbudował zaufanie Jonathana. "Jonathan bardzo się uspokoił i zgadza się na odważniejsze podejścia." - Aneta',
+        "Handofty są kompletne i dobrze opisane. Developerzy rzadko wracają z pytaniami — widać że Jan myśli o implementacji na etapie projektu.",
     },
     {
       id: "s3",
       icon: "ShieldCheck",
-      title: "Samodzielność i ownership",
+      title: "Niezawodność i dowożenie",
       description:
-        'Dowozi bez nadzoru. Damian: "Wiem że Aptus jest w dobrych rękach. Oczekuję tego od Filipa/Konrada, nie od Kacpra." - Preski na spotkanie, daje opcje do wyboru, sprawdza z zespołem',
+        "Zadania trafiają na czas i w umówionym zakresie. Zespół może planować sprint nie martwiąc się o design bottleneck.",
     },
     {
       id: "s4",
       icon: "UsersRound",
-      title: "Współpraca i atmosfera",
+      title: "Współpraca cross-funkcyjna",
       description:
-        'Aneta: "Dobra dusza - mnóstwo spokoju i uśmiechu." Uwzględnia perspektywy FE i QA, dopytuje, wbija sam spotkania itp.',
+        "Naturalnie angażuje developerów i QA już na etapie wireframe'ów. Rozwiązania są realistyczne i rzadko wymagają renegocjacji.",
     },
   ],
 
   improvements: [
     {
       id: "i1",
-      icon: "Layers",
-      title: "Figma — porządek i techniki",
+      icon: "Clock",
+      title: "Estymacja czasu pracy",
       description:
-        "Solidne podstawy, ale pliki rosną i trudno się w nich poruszać. Do rozwinięcia: warianty, variables, higiena pliku. Edge Case'y: error states itp",
+        "Tendencja do niedoszacowania scope'u, szczególnie przy zadaniach zależnych od innych. Warto budować bufor i komunikować ryzyko wcześniej.",
     },
     {
       id: "i2",
       icon: "RefreshCw",
-      title: "Feedback loopy",
+      title: "Widoczność w trakcie pracy",
       description:
-        "Tendencja do zamykania się przed wyjściem z updatem. Krótsze pętle, więcej widoczności w toku pracy. [Damian - silos i slack odpowiedź]",
+        "Przy dłuższych zadaniach bywa cicho za długo. Krótsze check-iny i wcześniejszy WIP pozwoliłyby unikać późnych korekt.",
     },
     {
       id: "i3",
-      icon: "Crosshair",
-      title: "MVP mindset",
+      icon: "Mic2",
+      title: "Prezentowanie decyzji",
       description:
-        'Projektuje long-term ("co GDYBY"). Do ćwiczenia: priorytetyzacja pod natychmiastową wartość dla użytkownika i biznesu.',
+        'Dobre rozwiązania — ale narracja przed klientem bywa zbyt techniczna. Warto ćwiczyć prezentowanie przez pryzmat celu użytkownika, nie procesu.',
     },
     {
       id: "i4",
-      icon: "MessagesSquare",
-      title: "Pewność siebie w dyskusjach",
+      icon: "Layers",
+      title: "Skalowanie do design systemu",
       description:
-        'Zdarza się, że ustępuje zamiast bronić przemyślanych rozwiązań.\nMaciej Z.: "Jego designy nie odbiegają od midów."',
+        "Projektuje lokalnie, nie zawsze myśląc o reużywalności. Nowy komponent w DS to dobry sygnał — warto kontynuować tę praktykę.",
     },
   ],
 
   overall: {
     content:
-      '<p>Kacper w 7 miesiącach zrobił progres, którego oczekuje się od kogoś z większym stażem. Dojrzałość, samodzielność i relacje z klientem na poziomie mida. Obszary rozwoju naturalne dla etapu kariery i aktywnie przez niego adresowane.</p><blockquote><p>"Kacper zrobił taki progres w te pół roku, że aż szok." — Damian Fejdasz</p></blockquote><p>Na najbliższy okres warto żeby Kacper wybrał 2–3 priorytety rozwojowe i ułożył konkretną roadmapę zamiast gryźć wszystko naraz. Zaawansowana Figma przyjdzie naturalnie z praktyką w projektach, nie ma tu skrótu.</p>',
+      '<p>Jan solidnie stawia pierwsze kroki na poziomie mida. Progres jest widoczny i konsekwentny — zwłaszcza w zakresie samodzielności i jakości pracy z klientem. Kolejny etap to świadome budowanie wpływu poza własnym projektem.</p><blockquote><p>"Jan to ktoś, na kim można polegać — zawsze dowozi i nie trzeba go pilnować." — PM projektu Apollo</p></blockquote><p>Na najbliższy okres warto żeby Jan wybrał jeden obszar do głębszego rozwinięcia zamiast rozłożyć energię na wszystko równomiernie. Potencjał na seniora jest — pytanie o tempo i kierunek.</p>',
   },
 
   sections: {

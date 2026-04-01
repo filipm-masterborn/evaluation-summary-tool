@@ -28,7 +28,7 @@ export default function ClassicLayout({ data }: { data: EvaluationData }) {
         {/* === HEADER === */}
         <div className="flex gap-[18px] items-center pb-[16px] w-full">
           {/* Photo */}
-          <div className="border-[2.331px] border-neutral-800 rounded-[20px] w-[93.26px] h-[93.26px] overflow-hidden shrink-0 bg-neutral-200">
+          <div className="rounded-[20px] w-[93.26px] h-[93.26px] overflow-hidden shrink-0 bg-neutral-200">
             {data.photo ? (
               <img
                 src={data.photo}
@@ -206,7 +206,7 @@ export default function ClassicLayout({ data }: { data: EvaluationData }) {
                       <DynamicIcon
                         name={item.icon}
                         size={14}
-                        className="text-neutral-800 shrink-0"
+                        className="text-emerald-600 shrink-0"
                       />
                       <p className="font-[family-name:var(--font-jetbrains)] font-bold text-[10px] text-neutral-800 uppercase leading-[1.4] flex-1">
                         {item.title}
@@ -235,7 +235,7 @@ export default function ClassicLayout({ data }: { data: EvaluationData }) {
                       <DynamicIcon
                         name={item.icon}
                         size={14}
-                        className="text-neutral-800 shrink-0"
+                        className="text-amber-600 shrink-0"
                       />
                       <p className="font-[family-name:var(--font-jetbrains)] font-bold text-[10px] text-neutral-800 uppercase leading-[1.4] flex-1">
                         {item.title}

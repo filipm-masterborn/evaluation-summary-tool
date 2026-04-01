@@ -98,7 +98,7 @@ export default function ExportButton({
       <button
         onClick={handleExportPng}
         disabled={isExporting}
-        className={`font-jetbrains text-xs uppercase tracking-wide rounded-lg px-4 py-2 bg-neutral-800 text-white hover:bg-neutral-700 transition-colors ${
+        className={`font-jetbrains text-[10px] uppercase tracking-wide rounded-lg px-3 py-1.5 bg-neutral-800 text-white hover:bg-neutral-700 transition-colors ${
           isExporting ? "opacity-50 cursor-not-allowed" : ""
         }`}
       >
@@ -107,7 +107,7 @@ export default function ExportButton({
       <button
         onClick={handleExportPdf}
         disabled={isExporting}
-        className={`font-jetbrains text-xs uppercase tracking-wide rounded-lg px-4 py-2 bg-white border border-neutral-300 text-neutral-800 hover:bg-neutral-50 transition-colors ${
+        className={`font-jetbrains text-[10px] uppercase tracking-wide rounded-lg px-3 py-1.5 bg-white border border-neutral-300 text-neutral-800 hover:bg-neutral-50 transition-colors ${
           isExporting ? "opacity-50 cursor-not-allowed" : ""
         }`}
       >

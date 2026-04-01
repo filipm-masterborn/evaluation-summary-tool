@@ -14,6 +14,7 @@ import {
   Columns3,
   Minus,
   ChevronRight,
+  Info,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -44,10 +45,10 @@ function SectionToggle({
   return (
     <button
       onClick={onToggle}
-      className={`flex items-center gap-1.5 px-2 py-1 rounded text-[10px] font-[family-name:var(--font-jetbrains)] font-bold tracking-[0.3px] uppercase transition-colors ${
+      className={`flex items-center gap-1.5 px-2 py-1 rounded text-[10px] font-[family-name:var(--font-jetbrains)] font-bold tracking-[0.3px] uppercase transition-colors border ${
         enabled
-          ? "bg-neutral-800 text-white"
-          : "bg-neutral-100 text-neutral-400 line-through"
+          ? "bg-white text-neutral-700 border-neutral-300"
+          : "bg-neutral-100 text-neutral-400 border-neutral-100 line-through"
       }`}
     >
       {enabled ? <Eye size={12} /> : <EyeOff size={12} />}
@@ -133,7 +134,7 @@ function SectionCard({
         </span>
       </button>
       {open && (
-        <div className="px-4 pb-4 flex flex-col gap-3 overflow-y-auto max-h-[60vh]">
+        <div className="px-4 pb-4 flex flex-col gap-3">
           {children}
         </div>
       )}
@@ -232,7 +233,17 @@ export default function EvaluationForm() {
       {/* Header section */}
       <SectionCard title="Profil" open={openSection === "profil"} onToggle={() => toggleSection("profil")}>
         <div>
-          <Label>Zdjęcie (URL)</Label>
+          <div className="flex items-center gap-1.5 mb-1">
+            <label className="font-[family-name:var(--font-jetbrains)] font-bold text-[10px] text-neutral-500 tracking-[0.4px] uppercase">
+              Zdjęcie (URL)
+            </label>
+            <div className="relative group">
+              <Info size={11} className="text-neutral-400 cursor-help" />
+              <div className="absolute left-0 bottom-full mb-1.5 w-56 p-2.5 rounded-lg bg-neutral-800 text-white text-[10px] font-[family-name:var(--font-inter)] leading-[1.4] invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-opacity z-50 pointer-events-none shadow-lg">
+                Kliknij w zdjęcie osoby na Slacku → na podglądzie awatara PPM → &quot;Copy Image Address&quot;
+              </div>
+            </div>
+          </div>
           <Input
             value={store.photo}
             onChange={store.setPhoto}

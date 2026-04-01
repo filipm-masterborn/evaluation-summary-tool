@@ -21,7 +21,7 @@ export default function CompactLayout({ data }: { data: EvaluationData }) {
       <div className="flex flex-col gap-[16px]">
         {/* === HEADER - wider, horizontal === */}
         <div className="flex gap-[20px] items-center">
-          <div className="border-[2px] border-neutral-800 rounded-[16px] w-[72px] h-[72px] overflow-hidden shrink-0 bg-neutral-200">
+          <div className="rounded-[16px] w-[72px] h-[72px] overflow-hidden shrink-0 bg-neutral-200">
             {data.photo ? (
               <img src={data.photo} alt={data.name} className="w-full h-full object-cover" />
             ) : (
@@ -110,7 +110,7 @@ export default function CompactLayout({ data }: { data: EvaluationData }) {
                 <p className="font-[family-name:var(--font-jetbrains)] font-bold text-[9px] text-neutral-500 tracking-[0.4px] uppercase">Strengths</p>
                 {data.strengths.map((item) => (
                   <div key={item.id} className="flex gap-[8px] items-start">
-                    <DynamicIcon name={item.icon} size={12} className="text-neutral-800 shrink-0 mt-[1px]" />
+                    <DynamicIcon name={item.icon} size={12} className="text-emerald-600 shrink-0 mt-[1px]" />
                     <div className="flex-1">
                       <p className="font-[family-name:var(--font-jetbrains)] font-bold text-[9px] text-neutral-800 uppercase leading-[1.4]">{item.title}</p>
                       <p className="font-[family-name:var(--font-inter)] font-medium text-[9px] text-neutral-600 leading-[1.4] tracking-[-0.2px]">{item.description}</p>
@@ -124,7 +124,7 @@ export default function CompactLayout({ data }: { data: EvaluationData }) {
                 <p className="font-[family-name:var(--font-jetbrains)] font-bold text-[9px] text-neutral-500 tracking-[0.4px] uppercase">Areas for improvement</p>
                 {data.improvements.map((item) => (
                   <div key={item.id} className="flex gap-[8px] items-start">
-                    <DynamicIcon name={item.icon} size={12} className="text-neutral-800 shrink-0 mt-[1px]" />
+                    <DynamicIcon name={item.icon} size={12} className="text-amber-600 shrink-0 mt-[1px]" />
                     <div className="flex-1">
                       <p className="font-[family-name:var(--font-jetbrains)] font-bold text-[9px] text-neutral-800 uppercase leading-[1.4]">{item.title}</p>
                       <p className="font-[family-name:var(--font-inter)] font-medium text-[9px] text-neutral-600 leading-[1.4] tracking-[-0.2px] whitespace-pre-wrap">{item.description}</p>
