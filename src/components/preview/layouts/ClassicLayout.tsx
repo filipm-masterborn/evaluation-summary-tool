@@ -97,7 +97,7 @@ export default function ClassicLayout({ data }: { data: EvaluationData }) {
 
         {/* === RATING + PROMOTION ROW === */}
         {(data.sections.rating || data.sections.promotion) && (
-          <div className="flex gap-[12px] items-start w-full">
+          <div className="flex gap-[12px] items-stretch w-full">
             {/* Rating card */}
             {data.sections.rating && (
               <div className="bg-neutral-50 border border-neutral-200 flex flex-col gap-[10px] flex-1 p-[16px] rounded-[12px] min-h-[124px]">

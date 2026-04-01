@@ -148,6 +148,7 @@ type SectionId = "profil" | "rating" | "awans" | "delta" | "strengths" | "improv
 export default function EvaluationForm() {
   const store = useEvaluationStore();
   const [openSection, setOpenSection] = useState<SectionId | null>("profil");
+  const [showClearConfirm, setShowClearConfirm] = useState(false);
 
   const toggleSection = (id: SectionId) => {
     setOpenSection((prev) => (prev === id ? null : id));
@@ -213,7 +214,7 @@ export default function EvaluationForm() {
         ))}
         <div className="ml-auto flex items-center gap-1">
           <button
-            onClick={store.clearAll}
+            onClick={() => setShowClearConfirm(true)}
             className="flex items-center gap-1 px-3 py-2 rounded-lg text-[11px] font-[family-name:var(--font-jetbrains)] text-neutral-400 hover:text-amber-600 hover:bg-amber-50 transition"
             title="Wyczyść wszystkie pola"
           >
@@ -473,6 +474,46 @@ export default function EvaluationForm() {
           />
         </div>
       </SectionCard>
+
+      {/* Clear confirmation dialog */}
+      {showClearConfirm && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/30"
+          onClick={() => setShowClearConfirm(false)}
+        >
+          <div
+            className="bg-white rounded-xl shadow-xl p-6 w-[320px] flex flex-col gap-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex flex-col gap-1.5">
+              <p className="font-[family-name:var(--font-jetbrains)] font-bold text-[13px] text-neutral-800">
+                Wyczyścić wszystkie pola?
+              </p>
+              <p className="font-[family-name:var(--font-inter)] text-[12px] text-neutral-500 leading-[1.5]">
+                Ta akcja usunie cały wpisany tekst — dane profilu, treści sekcji, strengths i improvements. Nie można cofnąć tej operacji.
+              </p>
+            </div>
+            <div className="flex justify-end gap-2">
+              <button
+                onClick={() => setShowClearConfirm(false)}
+                className="px-4 py-2 rounded-lg text-[11px] font-[family-name:var(--font-jetbrains)] font-bold text-neutral-500 hover:bg-neutral-100 transition"
+              >
+                Anuluj
+              </button>
+              <button
+                onClick={() => {
+                  store.clearAll();
+                  setShowClearConfirm(false);
+                }}
+                className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-[11px] font-[family-name:var(--font-jetbrains)] font-bold bg-amber-500 text-white hover:bg-amber-600 transition"
+              >
+                <Eraser size={12} />
+                Wyczyść
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
