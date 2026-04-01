@@ -8,7 +8,7 @@ export const defaultData: EvaluationData = {
 
   mbSince: "14 msc. — 01.01.2025",
   promotionDate: "3 msc. — 01.01.2026",
-  evaluationType: "Półroczna",
+  evaluationType: "Trzecia",
 
   rating: {
     score: 3.1,

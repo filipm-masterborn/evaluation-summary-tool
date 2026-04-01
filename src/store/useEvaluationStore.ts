@@ -33,6 +33,7 @@ interface EvaluationStore extends EvaluationData {
   setPromotionDate: (value: string) => void;
   setEvaluationType: (value: string) => void;
   resetToDefault: () => void;
+  clearAll: () => void;
 }
 
 export const useEvaluationStore = create<EvaluationStore>((set) => ({
@@ -68,4 +69,20 @@ export const useEvaluationStore = create<EvaluationStore>((set) => ({
   setPromotionDate: (promotionDate) => set({ promotionDate }),
   setEvaluationType: (evaluationType) => set({ evaluationType }),
   resetToDefault: () => set(defaultData),
+  clearAll: () =>
+    set((s) => ({
+      photo: "",
+      name: "",
+      title: "",
+      badge: { text: "", color: s.badge.color },
+      mbSince: "",
+      promotionDate: "",
+      evaluationType: "",
+      rating: { score: 0, maxScore: 4, respondents: 0, comment: "" },
+      promotion: { content: "" },
+      delta: "",
+      strengths: [],
+      improvements: [],
+      overall: { content: "" },
+    })),
 }));

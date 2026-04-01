@@ -15,6 +15,7 @@ import {
   Minus,
   ChevronRight,
   Info,
+  Eraser,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -210,14 +211,24 @@ export default function EvaluationForm() {
             {l.label}
           </button>
         ))}
-        <button
-          onClick={store.resetToDefault}
-          className="ml-auto flex items-center gap-1 px-3 py-2 rounded-lg text-[11px] font-[family-name:var(--font-jetbrains)] text-neutral-400 hover:text-red-500 hover:bg-red-50 transition"
-          title="Reset do domyślnych danych"
-        >
-          <RotateCcw size={12} />
-          Reset
-        </button>
+        <div className="ml-auto flex items-center gap-1">
+          <button
+            onClick={store.clearAll}
+            className="flex items-center gap-1 px-3 py-2 rounded-lg text-[11px] font-[family-name:var(--font-jetbrains)] text-neutral-400 hover:text-amber-600 hover:bg-amber-50 transition"
+            title="Wyczyść wszystkie pola"
+          >
+            <Eraser size={12} />
+            Wyczyść
+          </button>
+          <button
+            onClick={store.resetToDefault}
+            className="flex items-center gap-1 px-3 py-2 rounded-lg text-[11px] font-[family-name:var(--font-jetbrains)] text-neutral-400 hover:text-red-500 hover:bg-red-50 transition"
+            title="Reset do domyślnych danych"
+          >
+            <RotateCcw size={12} />
+            Reset
+          </button>
+        </div>
       </div>
 
       {/* Section toggles */}
