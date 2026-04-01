@@ -121,10 +121,10 @@ function SectionCard({
   onToggle: () => void;
 }) {
   return (
-    <div className="border border-neutral-200 rounded-xl bg-white overflow-hidden shrink-0">
+    <div className="border border-neutral-200 rounded-xl bg-white shrink-0">
       <button
         onClick={onToggle}
-        className="w-full flex items-center justify-between px-4 py-3 hover:bg-neutral-50 transition"
+        className="w-full flex items-center justify-between px-4 py-3 hover:bg-neutral-50 transition rounded-t-xl"
       >
         <span className="font-[family-name:var(--font-jetbrains)] font-bold text-[11px] text-neutral-700 tracking-[0.3px] uppercase">
           {title}
