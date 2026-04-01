@@ -29,7 +29,7 @@ export default function ClassicLayout({ data }: { data: EvaluationData }) {
       <div className="flex flex-col gap-[12px] items-start w-[567px]">
         {/* === HEADER === */}
         <div
-          className="flex gap-[18px] items-center pb-[16px] w-full cursor-pointer rounded-xl hover:bg-blue-50/40 transition-colors"
+          className="flex gap-[18px] items-center pb-[16px] w-full cursor-pointer rounded-xl hover:bg-blue-50/40 hover:ring-2 hover:ring-blue-300 transition-all"
           onClick={() => setFocusedSection("profil")}
         >
           {/* Photo */}
