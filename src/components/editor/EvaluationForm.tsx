@@ -17,7 +17,7 @@ import {
   Info,
   Eraser,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const BADGE_COLORS: { value: BadgeColor; label: string; swatch: string }[] = [
   { value: "cyan", label: "Cyan", swatch: "bg-cyan-300" },
@@ -115,14 +115,25 @@ function SectionCard({
   children,
   open,
   onToggle,
+  sectionId,
+  highlighted = false,
 }: {
   title: string;
   children: React.ReactNode;
   open: boolean;
   onToggle: () => void;
+  sectionId: string;
+  highlighted?: boolean;
 }) {
   return (
-    <div className="border border-neutral-200 rounded-xl bg-white shrink-0">
+    <div
+      data-section={sectionId}
+      className={`rounded-xl bg-white shrink-0 border transition-all duration-300 ${
+        highlighted
+          ? "border-blue-400 ring-2 ring-blue-300"
+          : "border-neutral-200"
+      }`}
+    >
       <button
         onClick={onToggle}
         className="w-full flex items-center justify-between px-4 py-3 hover:bg-neutral-50 transition rounded-t-xl"
@@ -149,6 +160,23 @@ export default function EvaluationForm() {
   const store = useEvaluationStore();
   const [openSection, setOpenSection] = useState<SectionId | null>("profil");
   const [showClearConfirm, setShowClearConfirm] = useState(false);
+  const [highlightedSection, setHighlightedSection] = useState<SectionId | null>(null);
+
+  useEffect(() => {
+    const signal = store.focusSectionSignal;
+    if (!signal) return;
+    const id = signal.id as SectionId;
+    setOpenSection(id);
+    setHighlightedSection(id);
+    setTimeout(() => {
+      document.querySelector(`[data-section="${id}"]`)?.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+      });
+    }, 50);
+    const timer = setTimeout(() => setHighlightedSection(null), 1500);
+    return () => clearTimeout(timer);
+  }, [store.focusSectionSignal]);
 
   const toggleSection = (id: SectionId) => {
     setOpenSection((prev) => (prev === id ? null : id));
@@ -243,7 +271,7 @@ export default function EvaluationForm() {
       </div>
 
       {/* Header section */}
-      <SectionCard title="Profil" open={openSection === "profil"} onToggle={() => toggleSection("profil")}>
+      <SectionCard title="Profil" open={openSection === "profil"} onToggle={() => toggleSection("profil")} sectionId="profil" highlighted={highlightedSection === "profil"}>
         <div>
           <div className="flex items-center gap-1.5 mb-1">
             <label className="font-[family-name:var(--font-jetbrains)] font-bold text-[10px] text-neutral-500 tracking-[0.4px] uppercase">
@@ -312,7 +340,7 @@ export default function EvaluationForm() {
       </SectionCard>
 
       {/* Rating */}
-      <SectionCard title="Rating" open={openSection === "rating"} onToggle={() => toggleSection("rating")}>
+      <SectionCard title="Rating" open={openSection === "rating"} onToggle={() => toggleSection("rating")} sectionId="rating" highlighted={highlightedSection === "rating"}>
         <div className="grid grid-cols-3 gap-3">
           <div>
             <Label>Score</Label>
@@ -364,7 +392,7 @@ export default function EvaluationForm() {
       </SectionCard>
 
       {/* Promotion */}
-      <SectionCard title="Awans" open={openSection === "awans"} onToggle={() => toggleSection("awans")}>
+      <SectionCard title="Awans" open={openSection === "awans"} onToggle={() => toggleSection("awans")} sectionId="awans" highlighted={highlightedSection === "awans"}>
         <div>
           <Label>Decyzja + punkty</Label>
           <RichTextEditor
@@ -376,7 +404,7 @@ export default function EvaluationForm() {
       </SectionCard>
 
       {/* Delta */}
-      <SectionCard title="Delta" open={openSection === "delta"} onToggle={() => toggleSection("delta")}>
+      <SectionCard title="Delta" open={openSection === "delta"} onToggle={() => toggleSection("delta")} sectionId="delta" highlighted={highlightedSection === "delta"}>
         <div>
           <Label>Zmiany / wydarzenia</Label>
           <RichTextEditor
@@ -388,7 +416,7 @@ export default function EvaluationForm() {
       </SectionCard>
 
       {/* Strengths */}
-      <SectionCard title="Strengths" open={openSection === "strengths"} onToggle={() => toggleSection("strengths")}>
+      <SectionCard title="Strengths" open={openSection === "strengths"} onToggle={() => toggleSection("strengths")} sectionId="strengths" highlighted={highlightedSection === "strengths"}>
         {store.strengths.map((item) => (
           <div key={item.id} className="border border-neutral-100 rounded-lg p-4 flex flex-col gap-3 bg-neutral-50">
             <div className="flex items-center gap-2">
@@ -426,7 +454,7 @@ export default function EvaluationForm() {
       </SectionCard>
 
       {/* Improvements */}
-      <SectionCard title="Areas for Improvement" open={openSection === "improvements"} onToggle={() => toggleSection("improvements")}>
+      <SectionCard title="Areas for Improvement" open={openSection === "improvements"} onToggle={() => toggleSection("improvements")} sectionId="improvements" highlighted={highlightedSection === "improvements"}>
         {store.improvements.map((item) => (
           <div key={item.id} className="border border-neutral-100 rounded-lg p-4 flex flex-col gap-3 bg-neutral-50">
             <div className="flex items-center gap-2">
@@ -464,7 +492,7 @@ export default function EvaluationForm() {
       </SectionCard>
 
       {/* Overall */}
-      <SectionCard title="Overall" open={openSection === "overall"} onToggle={() => toggleSection("overall")}>
+      <SectionCard title="Overall" open={openSection === "overall"} onToggle={() => toggleSection("overall")} sectionId="overall" highlighted={highlightedSection === "overall"}>
         <div>
           <Label>Podsumowanie</Label>
           <RichTextEditor

@@ -9,6 +9,10 @@ import {
 import { defaultData } from "@/lib/defaultData";
 
 interface EvaluationStore extends EvaluationData {
+  // Interactive preview focus signal
+  focusSectionSignal: { id: string; nonce: number } | null;
+  setFocusedSection: (id: string) => void;
+
   // Setters
   setField: <K extends keyof EvaluationData>(
     key: K,
@@ -38,6 +42,12 @@ interface EvaluationStore extends EvaluationData {
 
 export const useEvaluationStore = create<EvaluationStore>((set) => ({
   ...defaultData,
+
+  focusSectionSignal: null,
+  setFocusedSection: (id) =>
+    set((s) => ({
+      focusSectionSignal: { id, nonce: (s.focusSectionSignal?.nonce ?? 0) + 1 },
+    })),
 
   setField: (key, value) => set({ [key]: value }),
   setPhoto: (url) => set({ photo: url }),
